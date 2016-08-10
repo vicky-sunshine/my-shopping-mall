@@ -18,6 +18,26 @@ RSpec.describe Cart, type: :model do
     end
      
     it "加了同類商品到購物車，購買項目(CartItem)不會增加，但數量會改變" do
+      cart = Cart.new
+      
+      3.times {cart.add_item(1)}
+      4.times {cart.add_item(2)}
+      2.times {cart.add_item(1)}
+      10.times {cart.add_item(2)}
+      
+      expect(cart.items.count).to be 2
+      expect(cart.items.first.quantity).to be 5
+      expect(cart.items.second.quantity).to be 14
+      
+    end
+    
+    it "商品可以放到購物車，也可以再拿出來" do
+      cart = Cart.new
+      p1 = Product.create(title: "p1", price: 100)
+      cart.add_item(p1.id)
+      
+      expect(cart.items.first.product).to be_a Product
+      expect(cart.items.first.product_id).to be p1.id
     end
   end
 end
