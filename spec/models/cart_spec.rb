@@ -39,5 +39,15 @@ RSpec.describe Cart, type: :model do
       expect(cart.items.first.product).to be_a Product
       expect(cart.items.first.product_id).to be p1.id
     end
+    
+    it "可以計算整台購物車的總消費金額" do
+      cart = Cart.new
+      p1 = Product.create(title: "p1", price: 100)
+      p2 = Product.create(title: "p2", price: 200)
+      3.times { cart.add_item(p1.id) }
+      4.times { cart.add_item(p2.id) }
+
+      expect(cart.total_price).to be 1100
+    end
   end
 end
