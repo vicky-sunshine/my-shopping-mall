@@ -13,4 +13,12 @@ class CartItem
   def product
     Product.find_by(id: product_id)
   end
+  
+  def price
+    if product
+      product.price * quantity
+    else
+      0
+    end
+  end
 end
